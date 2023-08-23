@@ -5,6 +5,16 @@ const setupCustomButtons = () => {
     }
 
     const geleButton = document.querySelector('button.bg-yellow-500');
+
+    // Controleer of de gele knop niet bestaat, maar de rode wel. Als dat het geval is, verwijder de rode knop.
+    if (!geleButton) {
+        const rodeButton = document.querySelector('.bg-red-500');
+        if (rodeButton) {
+            rodeButton.remove();
+        }
+        return; // Verlaat de functie
+    }
+
     if (geleButton && !document.querySelector('.bg-red-500')) {
         const trashIcon = `
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" width="16" height="16" class="mr-2">

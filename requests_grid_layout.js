@@ -7,7 +7,9 @@ const customCSS = `
         align-items: center;
     }
     
-    .relative.z-10.flex.w-full.items-center.overflow-hidden.pl-4.pr-4.sm\:pr-0.xl\:w-7\/12.\32 xl\:w-2\/3 {
+    .relative.z-10.flex.w-full.items-center.overflow-hidden.pl-4.pr-4.sm\:pr-0.xl\:w-7\/12` + 
+    '.32' +
+    `xl\:w-2\/3 {
         width: 50%;
     }
     
@@ -38,8 +40,8 @@ const applyStyles = () => {
 applyStyles();
 
 // Voeg de MutationObserver toe
-const observer = new MutationObserver(() => {
+const cssObserver = new MutationObserver(() => {
     applyStyles();
 });
 
-observer.observe(document.body, { childList: true, subtree: true });
+cssObserver.observe(document.body, { childList: true, subtree: true });

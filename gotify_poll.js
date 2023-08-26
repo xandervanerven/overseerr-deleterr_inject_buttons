@@ -122,5 +122,5 @@ function startGotifyPolling() {
 // Event listener om het pollen te stoppen wanneer de URL van de pagina verandert
 window.addEventListener('popstate', function(event) {
     stopGotifyPolling();
-    console.log("stop polling")
+    console.log("stop polling, popstate")
 });

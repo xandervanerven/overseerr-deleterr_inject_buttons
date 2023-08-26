@@ -1,5 +1,6 @@
 (function() {
-    let isFirstFetch = true;
+    const seenMessageIds = new Set();
+    let isFirstRun = true;  // Deze vlag wordt gebruikt om te controleren of dit de eerste keer is dat de functie wordt uitgevoerd.
 
     function fetchGotifyMessages() {
         const proxyEndpoint = "/get_messages";
@@ -13,12 +14,22 @@
             })
             .then(data => {
                 if (data && data.messages && Array.isArray(data.messages) && data.messages.length > 0) {
-                    if (!isFirstFetch) {
-                        data.messages.forEach(message => {
+                    data.messages.reverse().forEach(message => {
+                        // Als dit de eerste run is, markeer dan gewoon de bericht-ID's als 'gezien'.
+                        if (isFirstRun) {
+                            seenMessageIds.add(message.id);
+                        } else if (!seenMessageIds.has(message.id)) {
                             console.log("Gotify Message:", message.message);
-                        });
-                    } else {
-                        isFirstFetch = false;
+                            seenMessageIds.add(message.id);
+
+                            // Als de set te groot wordt (bijv. meer dan 100), maak het dan leeg om geheugengebruik te minimaliseren
+                            if (seenMessageIds.size > 100) {
+                                seenMessageIds.clear();
+                            }
+                        }
+                    });
+                    if (isFirstRun) {
+                        isFirstRun = false;  // Markeer dat de eerste run is voltooid.
                     }
                 }
             })
@@ -27,5 +38,6 @@
             });
     }
 
+    // Roep de functie om de zoveel seconden aan. Hier is het ingesteld op 1 seconde (1000 milliseconden).
     setInterval(fetchGotifyMessages, 1000);
 })();

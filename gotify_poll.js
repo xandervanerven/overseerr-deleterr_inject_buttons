@@ -9,6 +9,16 @@ function startGotifyPolling() {
 
     const seenMessageIds = new Set();
     let isFirstRun = true;
+    let alertifyDialog;
+
+    function showPopupMessage(message) {
+        if (!alertifyDialog) {
+            alertifyDialog = alertify.alert("Gotify Messages", message);
+        } else {
+            const currentContent = alertifyDialog.content;
+            alertifyDialog.setContent(currentContent + "<br>" + message);
+        }
+    }
 
     function fetchGotifyMessages() {
         const proxyEndpoint = "/get_messages";
@@ -25,17 +35,15 @@ function startGotifyPolling() {
                     data.messages.reverse().forEach(message => {
                         const messageText = message.message;
 
-                        // Als dit de eerste run is en het bericht bevat "Verzoek om" of "Request to", markeer dan de bericht-ID's als 'gezien'.
-                        // En begin met het weergeven van de berichten.
                         if (isFirstRun && (messageText.includes("Verzoek om") || messageText.includes("Request to"))) {
                             isFirstRun = false;
                         }
 
                         if (!isFirstRun && !seenMessageIds.has(message.id)) {
                             console.log("Gotify Message:", message.message);
+                            showPopupMessage(messageText);  // Toon het bericht in de popup
                             seenMessageIds.add(message.id);
 
-                            // Als de set te groot wordt (bijv. meer dan 100), maak het dan leeg om geheugengebruik te minimaliseren
                             if (seenMessageIds.size > 100) {
                                 seenMessageIds.clear();
                             }
@@ -49,13 +57,11 @@ function startGotifyPolling() {
                 console.log("There was a problem with the fetch operation:", error.message);
             })
             .finally(() => {
-                // Controleer of de gele button nog steeds bestaat na elke fetch
                 if (!document.querySelector('button.bg-yellow-500')) {
                     stopGotifyPolling();
                 }
             });
     }
 
-    // Roep de functie om de zoveel seconden aan. Hier is het ingesteld op 1 seconde (1000 milliseconden).
     gotifyInterval = setInterval(fetchGotifyMessages, 1000);
 }

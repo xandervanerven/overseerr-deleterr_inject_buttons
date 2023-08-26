@@ -34,6 +34,7 @@ function styleAlertifyDialog() {
     if (dialogElem) {
         dialogElem.classList.add('ring-1', 'shadow-xl', 'sm:rounded-lg', 'bg-gray-800', 'text-gray-200');
         dialogElem.style.cssText += 'border: 0px !important; border-radius: 0.5rem !important; background-color: rgb(31 41 55/var(--tw-bg-opacity)) !important;';
+        dialogElem.style.cssText += 'box-shadow: var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)!important; --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) rgb(158 158 158 / 10%)!important;'
     }
     if (dialogHeader) {
         dialogHeader.classList.add('text-white');

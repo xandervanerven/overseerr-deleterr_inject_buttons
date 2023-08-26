@@ -15,6 +15,7 @@ function showPopupMessage(message) {
         let dialogHeader = document.querySelector('.alertify .ajs-header');
         let dialogContent = document.querySelector('.alertify .ajs-content');
         let dialogFooter = document.querySelector('.alertify .ajs-footer');
+        let dialogDimmer = document.querySelector('.alertify .ajs-dimmer');
 
         if (dialogElem) {
             dialogElem.classList.add('ring-1','shadow-xl', 'sm:rounded-lg', 'bg-gray-800', 'text-gray-200');
@@ -30,7 +31,10 @@ function showPopupMessage(message) {
         }
         if (dialogFooter) {
             dialogFooter.style.cssText += 'background-color: rgb(31 41 55/var(--tw-bg-opacity)) !important;';
-        }            
+        }        
+        if (dialogDimmer) {
+            dialogDimmer.style.cssText += 'background-color: rgba(0,0,0,.65) !important;';
+        }        
         
         alertifyDialog.setting('onclose', function() { 
             alertifyDialog = null;  

@@ -14,18 +14,23 @@ function showPopupMessage(message) {
         let dialogElem = document.querySelector('.alertify .ajs-dialog');
         let dialogHeader = document.querySelector('.alertify .ajs-header');
         let dialogContent = document.querySelector('.alertify .ajs-content');
+        let dialogFooter = document.querySelector('.alertify .ajs-footer');
+
         if (dialogElem) {
             dialogElem.classList.add('shadow-xl', 'sm:rounded-lg', 'bg-gray-800', 'text-gray-200');
             dialogElem.style.cssText += 'border-radius: 0.5rem !important; background-color: rgb(31 41 55/var(--tw-bg-opacity)) !important;';
         }        
         if (dialogHeader) {
-            dialogHeader.classList.add('text-white'); // Hier veranderd
-            dialogHeader.style.cssText += 'color: color: rgb(255 255 255/var(--tw-text-opacity)) !important;';
+            dialogHeader.classList.add('text-white');
+            dialogHeader.style.cssText += 'background-color: rgb(31 41 55/var(--tw-bg-opacity)) !important; color: rgb(255 255 255/var(--tw-text-opacity)) !important;';
         }
         if (dialogContent) {
-            dialogContent.classList.add('shadow-xl', 'bg-gray-900', 'text-gray-200'); // Hier veranderd
+            dialogContent.classList.add('text-gray-200');
             dialogContent.style.cssText += 'background-color: rgb(31 41 55/var(--tw-bg-opacity)) !important;';
-        }        
+        }
+        if (dialogFooter) {
+            dialogFooter.style.cssText += 'background-color: rgb(31 41 55/var(--tw-bg-opacity)) !important;';
+        }            
         
         alertifyDialog.setting('onclose', function() { 
             alertifyDialog = null;  

@@ -26,7 +26,7 @@ function showPopupMessage(message) {
         }
         if (dialogContent) {
             dialogContent.classList.add('text-gray-200');
-            dialogContent.style.cssText += 'background-color: rgb(31 41 55/var(--tw-bg-opacity)) !important;';
+            dialogContent.style.cssText += 'background-color: rgb(55 65 81/var(--tw-bg-opacity)) !important;';
         }
         if (dialogFooter) {
             dialogFooter.style.cssText += 'background-color: rgb(31 41 55/var(--tw-bg-opacity)) !important;';

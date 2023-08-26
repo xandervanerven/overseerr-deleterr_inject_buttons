@@ -81,6 +81,7 @@ function startGotifyPolling() {
             .finally(() => {
                 if (window.location.pathname !== initialURL || !document.querySelector('button.bg-yellow-500') || (!currentURL.includes('/movie/') && !currentURL.includes('/tv/'))) {
                     stopGotifyPolling();
+                    console.log("stop polling")
                 }
             });
     }
@@ -112,10 +113,14 @@ function startGotifyPolling() {
     gotifyInterval = setInterval(fetchGotifyMessages, 1000);
 
     // Stop het pollen na 30 seconden
-    setTimeout(stopGotifyPolling, 30000);
+    setTimeout(() => {
+        stopGotifyPolling();
+        console.log("30 seconds over, stop polling");
+    }, 30000);
 }
 
 // Event listener om het pollen te stoppen wanneer de URL van de pagina verandert
 window.addEventListener('popstate', function(event) {
     stopGotifyPolling();
+    console.log("stop polling")
 });

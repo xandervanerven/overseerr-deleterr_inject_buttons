@@ -21,11 +21,11 @@ function showPopupMessage(message) {
             dialogElem.style.cssText += 'border: 0px !important; border-radius: 0.5rem !important; background-color: rgb(31 41 55/var(--tw-bg-opacity)) !important;';
         }        
         if (dialogHeader) {
-            dialogHeader.classList.add('text-white', 'sm:rounded-lg');
+            dialogHeader.classList.add('text-white');
             dialogHeader.style.cssText += 'background-color: rgb(31 41 55/var(--tw-bg-opacity)) !important; color: rgb(255 255 255/var(--tw-text-opacity)) !important;';
         }
         if (dialogContent) {
-            dialogContent.classList.add('text-gray-200');
+            dialogContent.classList.add('text-gray-200', 'sm:rounded-lg');
             dialogContent.style.cssText += 'background-color: rgb(55 65 81/var(--tw-bg-opacity)) !important;';
         }
         if (dialogFooter) {

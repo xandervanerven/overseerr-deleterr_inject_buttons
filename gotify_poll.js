@@ -2,6 +2,8 @@ let gotifyInterval;
 let alertifyDialog = null;  
 let messagesContent = ""; 
 
+const currentURL = window.location.pathname;
+
 function showPopupMessage(message) {
     messagesContent += message + "<br>";  
 
@@ -16,11 +18,11 @@ function showPopupMessage(message) {
             dialogElem.classList.add('shadow-xl', 'sm:rounded-lg', 'bg-gray-800', 'text-gray-200');
         }
         if (dialogHeader) {
-            dialogElem.classList.add('text-white');
+            dialogHeader.classList.add('text-white'); // Hier veranderd
         }
         if (dialogContent) {
-            dialogElem.classList.add('shadow-xl', 'bg-gray-900', 'text-gray-200');
-        }
+            dialogContent.classList.add('shadow-xl', 'bg-gray-900', 'text-gray-200'); // Hier veranderd
+        }        
         
         alertifyDialog.setting('onclose', function() { 
             alertifyDialog = null;  

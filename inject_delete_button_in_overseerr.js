@@ -81,6 +81,7 @@ const setupCustomButtons = () => {
                     setButtonStyles(delete4KBtn);
                     delete4KBtn.style.marginLeft = '0.5rem';
                     setActionAndSubmit(delete4KBtn, 'delete 4k');
+                    delete4KBtn.addEventListener('click', startGotifyPolling);
 
                     const deleteBtn = closeButton.cloneNode(true);
                     deleteBtn.querySelector('span').textContent = 'Delete';
@@ -90,6 +91,7 @@ const setupCustomButtons = () => {
                     setButtonStyles(deleteBtn);
                     deleteBtn.style.marginLeft = '0.5rem';
                     setActionAndSubmit(deleteBtn, 'delete');
+                    deleteBtn.addEventListener('click', startGotifyPolling);
 
                     closeButton.parentNode.insertBefore(delete4KBtn, closeButton);
                     closeButton.parentNode.insertBefore(deleteBtn, delete4KBtn.nextSibling);

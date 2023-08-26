@@ -17,7 +17,7 @@ function showPopupMessage(message) {
         let dialogFooter = document.querySelector('.alertify .ajs-footer');
 
         if (dialogElem) {
-            dialogElem.classList.add('shadow-xl', 'sm:rounded-lg', 'bg-gray-800', 'text-gray-200');
+            dialogElem.classList.add('ring-1','shadow-xl', 'sm:rounded-lg', 'bg-gray-800', 'text-gray-200');
             dialogElem.style.cssText += 'border-radius: 0.5rem !important; background-color: rgb(31 41 55/var(--tw-bg-opacity)) !important;';
         }        
         if (dialogHeader) {

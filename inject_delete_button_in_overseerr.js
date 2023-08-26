@@ -67,6 +67,7 @@ const setupCustomButtons = () => {
 
         nieuweRodeButton.addEventListener('click', function() {
             geleButton.click();
+            stopGotifyPolling();  // Stop de huidige polling, indien actief
         });
 
         nieuweRodeButton.addEventListener('click', function() {

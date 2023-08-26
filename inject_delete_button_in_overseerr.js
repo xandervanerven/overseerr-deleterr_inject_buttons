@@ -1,8 +1,8 @@
 const setupCustomButtons = () => {
     const currentURL = window.location.href;
-    if (!document.querySelector('button.bg-yellow-500') || (!currentURL.includes('/movie/') && !currentURL.includes('/tv/'))) {
-        stopGotifyPolling();
-    }    
+    if (!currentURL.includes('/movie/') && !currentURL.includes('/tv/')) {
+        return; // Stop de uitvoering als de URL niet de vereiste strings bevat
+    }
 
     const geleButton = document.querySelector('button.bg-yellow-500');
 

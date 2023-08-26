@@ -6,7 +6,7 @@ function showPopupMessage(message) {
     messagesContent += message + "<br>";  
 
     if (!alertifyDialog) {
-        alertifyDialog = alertify.alert("Gotify Messages", messagesContent).set({transition:'zoom'}).show();
+        alertifyDialog = alertify.alert("Overseerr deleterr", messagesContent).set({transition:'zoom'}).show();
         alertifyDialog.setting('onclose', function() { 
             alertifyDialog = null;  
         });

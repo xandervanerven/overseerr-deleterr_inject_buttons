@@ -1,4 +1,6 @@
-(function() {
+let gotifyInterval;
+
+function startGotifyPolling() {
     const seenMessageIds = new Set();
     let isFirstRun = true;  // Deze vlag wordt gebruikt om te controleren of dit de eerste keer is dat de functie wordt uitgevoerd.
 
@@ -39,5 +41,9 @@
     }
 
     // Roep de functie om de zoveel seconden aan. Hier is het ingesteld op 1 seconde (1000 milliseconden).
-    setInterval(fetchGotifyMessages, 1000);
-})();
+    gotifyInterval = setInterval(fetchGotifyMessages, 1000);
+}
+
+function stopGotifyPolling() {
+    clearInterval(gotifyInterval);
+}

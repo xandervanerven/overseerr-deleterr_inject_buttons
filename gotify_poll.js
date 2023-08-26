@@ -13,12 +13,12 @@ function startGotifyPolling() {
 
     function showPopupMessage(message) {
         if (!alertifyDialog) {
-            alertifyDialog = alertify.alert("Gotify Messages", message);
+            alertifyDialog = alertify.alert("Gotify Messages", message).set({ autoReset: false });
         } else {
             const currentContent = alertifyDialog.content;
             alertifyDialog.setContent(currentContent + "<br>" + message);
         }
-    }
+    }    
 
     function fetchGotifyMessages() {
         const proxyEndpoint = "/get_messages";

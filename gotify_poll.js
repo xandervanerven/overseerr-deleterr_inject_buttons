@@ -1,4 +1,5 @@
 let gotifyInterval;
+let pollingTimeout;
 let alertifyDialog = null;
 let messagesContent = "";
 
@@ -52,6 +53,7 @@ function styleAlertifyDialog() {
 
 function stopGotifyPolling() {
     clearInterval(gotifyInterval);
+    clearTimeout(pollingTimeout);  // Annuleer de 30-seconden timer
 }
 
 function startGotifyPolling() {
@@ -79,13 +81,11 @@ function startGotifyPolling() {
                 console.log("There was a problem with the fetch operation:", error.message);
             })
             .finally(() => {
-                let currentPath = window.location.pathname;
-            
-                if (currentPath !== initialURL || !document.querySelector('button.bg-yellow-500') || (!currentPath.includes('/movie/') && !currentPath.includes('/tv/'))) {
+                if (window.location.pathname !== initialURL || !document.querySelector('button.bg-yellow-500') || (!currentURL.includes('/movie/') && !currentURL.includes('/tv/'))) {
                     stopGotifyPolling();
-                    console.log("stop polling")
+                    console.log("stop polling");
                 }
-            });            
+            });
     }
 
     function processGotifyData(data) {
@@ -114,8 +114,8 @@ function startGotifyPolling() {
 
     gotifyInterval = setInterval(fetchGotifyMessages, 1000);
 
-    // Stop het pollen na 30 seconden
-    setTimeout(() => {
+    // Start de 30-seconden timer
+    pollingTimeout = setTimeout(() => {
         stopGotifyPolling();
         console.log("30 seconds over, stop polling");
     }, 30000);
@@ -124,5 +124,5 @@ function startGotifyPolling() {
 // Event listener om het pollen te stoppen wanneer de URL van de pagina verandert
 window.addEventListener('popstate', function(event) {
     stopGotifyPolling();
-    console.log("stop polling, popstate")
+    console.log("stop polling, popstate");
 });

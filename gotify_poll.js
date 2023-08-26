@@ -1,7 +1,19 @@
 let gotifyInterval;
+let alertifyDialog;
+let messagesContent = "";  // Deze variabele zal alle berichten bijhouden voor de pop-up.
 
 function stopGotifyPolling() {
     clearInterval(gotifyInterval);
+}
+
+function showPopupMessage(message) {
+    messagesContent += message + "<br><br>";  // Voeg een nieuw bericht toe aan de huidige berichten.
+
+    if (!alertifyDialog) {
+        alertifyDialog = alertify.alert("Gotify Messages", messagesContent).set({transition:'zoom'}).show();
+    } else {
+        alertifyDialog.setContent(messagesContent);
+    }
 }
 
 function startGotifyPolling() {
@@ -9,16 +21,6 @@ function startGotifyPolling() {
 
     const seenMessageIds = new Set();
     let isFirstRun = true;
-    let alertifyDialog;
-
-    function showPopupMessage(message) {
-        if (!alertifyDialog) {
-            alertifyDialog = alertify.alert("Gotify Messages", message);
-        } else {
-            const currentContent = alertifyDialog.content;
-            alertifyDialog.setContent(currentContent + "<br><br>" + message);
-        }
-    }    
 
     function fetchGotifyMessages() {
         const proxyEndpoint = "/get_messages";
@@ -41,7 +43,7 @@ function startGotifyPolling() {
 
                         if (!isFirstRun && !seenMessageIds.has(message.id)) {
                             console.log("Gotify Message:", message.message);
-                            showPopupMessage(messageText);  // Toon het bericht in de popup
+                            showPopupMessage(message.message);  // Update de pop-up met het nieuwe bericht.
                             seenMessageIds.add(message.id);
 
                             if (seenMessageIds.size > 100) {

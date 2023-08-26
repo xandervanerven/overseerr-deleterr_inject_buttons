@@ -16,12 +16,15 @@ function showPopupMessage(message) {
         let dialogContent = document.querySelector('.alertify .ajs-content');
         if (dialogElem) {
             dialogElem.classList.add('shadow-xl', 'sm:rounded-lg', 'bg-gray-800', 'text-gray-200');
-        }
+            dialogElem.style.cssText += 'border-radius: 0.5rem !important; background-color: rgb(31 41 55/var(--tw-bg-opacity)) !important;';
+        }        
         if (dialogHeader) {
             dialogHeader.classList.add('text-white'); // Hier veranderd
+            dialogHeader.style.cssText += 'color: color: rgb(255 255 255/var(--tw-text-opacity)) !important;';
         }
         if (dialogContent) {
             dialogContent.classList.add('shadow-xl', 'bg-gray-900', 'text-gray-200'); // Hier veranderd
+            dialogContent.style.cssText += 'background-color: rgb(31 41 55/var(--tw-bg-opacity)) !important;';
         }        
         
         alertifyDialog.setting('onclose', function() { 

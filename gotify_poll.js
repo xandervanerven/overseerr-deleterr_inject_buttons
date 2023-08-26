@@ -6,7 +6,7 @@ function showPopupMessage(message) {
     messagesContent += message + "<br>";  
 
     if (!alertifyDialog) {
-        alertifyDialog = alertify.alert("Overseerr deleterr", messagesContent).set({transition:'zoom'}).show();
+        alertifyDialog = alertify.alert("Gotify Messages", messagesContent).set({transition:'zoom'}).show();
         alertifyDialog.setting('onclose', function() { 
             alertifyDialog = null;  
         });
@@ -20,8 +20,8 @@ function stopGotifyPolling() {
 }
 
 function startGotifyPolling() {
-    stopGotifyPolling(); 
-    messagesContent = "";  // Reset de opgebouwde berichten.
+    stopGotifyPolling();
+    messagesContent = "";  
 
     const seenMessageIds = new Set();
     let isFirstRun = true;
@@ -47,7 +47,7 @@ function startGotifyPolling() {
 
                         if (!isFirstRun && !seenMessageIds.has(message.id)) {
                             console.log("Gotify Message:", message.message);
-                            showPopupMessage(message.message);  
+                            showPopupMessage(message.message);
                             seenMessageIds.add(message.id);
 
                             if (seenMessageIds.size > 100) {
@@ -70,4 +70,7 @@ function startGotifyPolling() {
     }
 
     gotifyInterval = setInterval(fetchGotifyMessages, 1000);
+
+    // Stop het pollen na 30 seconden
+    setTimeout(stopGotifyPolling, 30000);
 }

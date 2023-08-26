@@ -3,8 +3,6 @@ let pollingTimeout;
 let alertifyDialog = null;
 let messagesContent = "";
 
-const currentURL = window.location.pathname;
-
 function showPopupMessage(message) {
     messagesContent += message + "<br>";
 
@@ -66,6 +64,7 @@ function startGotifyPolling() {
 
     function fetchGotifyMessages() {
         const proxyEndpoint = "/get_messages";
+        const currentURL = window.location.pathname;
 
         fetch(proxyEndpoint)
             .then(response => {
@@ -81,7 +80,7 @@ function startGotifyPolling() {
                 console.log("There was a problem with the fetch operation:", error.message);
             })
             .finally(() => {
-                if (!document.querySelector('button.bg-yellow-500') || (!currentURL.includes('/movie') && !currentURL.includes('/tv'))) {
+                if (!document.querySelector('button.bg-yellow-500') || (!currentURL.includes('/movie/') && !currentURL.includes('/tv/'))) {
                     stopGotifyPolling();
                     console.log("stop polling");
                 }

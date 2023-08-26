@@ -81,7 +81,7 @@ function startGotifyPolling() {
                 console.log("There was a problem with the fetch operation:", error.message);
             })
             .finally(() => {
-                if (!document.querySelector('button.bg-yellow-500') || (!currentURL.includes('/movie/') && !currentURL.includes('/tv/'))) {
+                if (!document.querySelector('button.bg-yellow-500') || (!currentURL.includes('/movie') && !currentURL.includes('/tv'))) {
                     stopGotifyPolling();
                     console.log("stop polling");
                 }

@@ -47,6 +47,7 @@ function styleAlertifyDialog() {
         dialogFooter.style.cssText += 'background-color: rgb(31 41 55/var(--tw-bg-opacity)) !important;';
     }
     if (dialogDimmer) {
+        dialogDimmer.classList.add('bg-opacity-70');
         dialogDimmer.style.cssText += '--tw-bg-opacity: 1 !important; background-color: rgb(31 41 55/var(--tw-bg-opacity)) !important;';
     }
 }

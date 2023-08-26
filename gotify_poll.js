@@ -113,7 +113,7 @@ function startGotifyPolling() {
         }
     }
 
-    gotifyInterval = setInterval(fetchGotifyMessages, 1000);
+    gotifyInterval = setInterval(fetchGotifyMessages, 500);
 
     // Start de 30-seconden timer
     pollingTimeout = setTimeout(() => {

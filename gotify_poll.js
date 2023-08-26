@@ -18,10 +18,10 @@ function showPopupMessage(message) {
 
         if (dialogElem) {
             dialogElem.classList.add('ring-1','shadow-xl', 'sm:rounded-lg', 'bg-gray-800', 'text-gray-200');
-            dialogElem.style.cssText += 'border-radius: 0.5rem !important; background-color: rgb(31 41 55/var(--tw-bg-opacity)) !important;';
+            dialogElem.style.cssText += 'border: 0px !important; border-radius: 0.5rem !important; background-color: rgb(31 41 55/var(--tw-bg-opacity)) !important;';
         }        
         if (dialogHeader) {
-            dialogHeader.classList.add('text-white');
+            dialogHeader.classList.add('text-white', 'sm:rounded-lg');
             dialogHeader.style.cssText += 'background-color: rgb(31 41 55/var(--tw-bg-opacity)) !important; color: rgb(255 255 255/var(--tw-text-opacity)) !important;';
         }
         if (dialogContent) {

@@ -37,6 +37,12 @@ function startGotifyPolling() {
             })
             .catch(error => {
                 console.log("There was a problem with the fetch operation:", error.message);
+            })
+            .finally(() => {
+                // Controleer of de gele button nog steeds bestaat na elke fetch
+                if (!document.querySelector('button.bg-yellow-500')) {
+                    stopGotifyPolling();
+                }
             });
     }
 

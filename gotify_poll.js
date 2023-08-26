@@ -98,7 +98,7 @@ function startGotifyPolling() {
             });
     }
 
-    gotifyInterval = setInterval(fetchGotifyMessages, 500);
+    gotifyInterval = setInterval(fetchGotifyMessages, 1000);
 
     // Stop het pollen na 30 seconden
     setTimeout(stopGotifyPolling, 30000);

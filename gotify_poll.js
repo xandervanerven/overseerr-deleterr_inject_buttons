@@ -1,5 +1,5 @@
 (function() {
-    let lastSeenMessageId = 0; // Begin bij 0 zodat alle berichten initieel worden getoond
+    let isFirstFetch = true;
 
     function fetchGotifyMessages() {
         const proxyEndpoint = "/get_messages";
@@ -13,16 +13,14 @@
             })
             .then(data => {
                 if (data && data.messages && Array.isArray(data.messages) && data.messages.length > 0) {
-                    // Filter berichten die nieuw zijn (hun ID is groter dan de laatst gezien ID)
-                    const newMessages = data.messages.filter(message => message.id > lastSeenMessageId);
-
-                    // Update de laatst gezien ID
-                    if (newMessages.length > 0) {
-                        lastSeenMessageId = Math.max(...newMessages.map(message => message.id));
+                    // Als het de eerste fetch is, sla dan de berichten over en zet de vlag uit
+                    if (isFirstFetch) {
+                        isFirstFetch = false;
+                        return; // Vroegtijdig beëindigen van deze callback-functie
                     }
 
-                    // Toon de nieuwe berichten
-                    newMessages.forEach(message => {
+                    // Toon de berichten
+                    data.messages.forEach(message => {
                         console.log("Gotify Message:", message.message);
                     });
                 }

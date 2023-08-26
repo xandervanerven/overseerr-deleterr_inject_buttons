@@ -61,7 +61,6 @@ function startGotifyPolling() {
     stopGotifyPolling();
     messagesContent = "";
 
-    const initialURL = window.location.pathname;
     const seenMessageIds = new Set();
     let isFirstRun = true;
 
@@ -82,7 +81,7 @@ function startGotifyPolling() {
                 console.log("There was a problem with the fetch operation:", error.message);
             })
             .finally(() => {
-                if (window.location.pathname !== initialURL || !document.querySelector('button.bg-yellow-500') || (!currentURL.includes('/movie/') && !currentURL.includes('/tv/'))) {
+                if (!document.querySelector('button.bg-yellow-500') || (!currentURL.includes('/movie/') && !currentURL.includes('/tv/'))) {
                     stopGotifyPolling();
                     console.log("stop polling");
                 }

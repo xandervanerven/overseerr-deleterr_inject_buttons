@@ -7,6 +7,13 @@ function showPopupMessage(message) {
 
     if (!alertifyDialog) {
         alertifyDialog = alertify.alert("Overseerr deleterr", messagesContent).set({transition:'zoom'}).show();
+        
+        // Pas hier de stijl van de dialog toe
+        let dialogElem = document.querySelector('.alertify .ajs-content');
+        if (dialogElem) {
+            dialogElem.classList.add('shadow-xl', 'sm:rounded-lg', 'bg-gray-800', 'text-gray-200');
+        }
+        
         alertifyDialog.setting('onclose', function() { 
             alertifyDialog = null;  
         });

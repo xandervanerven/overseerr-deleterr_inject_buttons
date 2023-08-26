@@ -79,11 +79,13 @@ function startGotifyPolling() {
                 console.log("There was a problem with the fetch operation:", error.message);
             })
             .finally(() => {
-                if (window.location.pathname !== initialURL || !document.querySelector('button.bg-yellow-500') || (!currentURL.includes('/movie/') && !currentURL.includes('/tv/'))) {
+                let currentPath = window.location.pathname;
+            
+                if (currentPath !== initialURL || !document.querySelector('button.bg-yellow-500') || (!currentPath.includes('/movie/') && !currentPath.includes('/tv/'))) {
                     stopGotifyPolling();
                     console.log("stop polling")
                 }
-            });
+            });            
     }
 
     function processGotifyData(data) {

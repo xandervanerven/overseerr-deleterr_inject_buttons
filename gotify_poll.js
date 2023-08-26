@@ -1,7 +1,5 @@
 (function() {
-    const seenMessageIds = new Set(); 
-    const scriptLoadTime = new Date(); 
-    console.log("Script loaded at:", scriptLoadTime);
+    let lastSeenMessageId = 0; // Begin bij 0 zodat alle berichten initieel worden getoond
 
     function fetchGotifyMessages() {
         const proxyEndpoint = "/get_messages";
@@ -14,18 +12,18 @@
                 return response.json();
             })
             .then(data => {
-                console.log("Received data:", data);
                 if (data && data.messages && Array.isArray(data.messages) && data.messages.length > 0) {
-                    data.messages.reverse().forEach(message => {
-                        const messageDate = new Date(message.date);
-                        console.log("Comparing dates:", messageDate, ">", scriptLoadTime);
-                        if (!seenMessageIds.has(message.id) && messageDate > scriptLoadTime) {
-                            console.log("Gotify Message:", message.message);
-                            seenMessageIds.add(message.id);
-                            if (seenMessageIds.size > 100) {
-                                seenMessageIds.clear();
-                            }
-                        }
+                    // Filter berichten die nieuw zijn (hun ID is groter dan de laatst gezien ID)
+                    const newMessages = data.messages.filter(message => message.id > lastSeenMessageId);
+
+                    // Update de laatst gezien ID
+                    if (newMessages.length > 0) {
+                        lastSeenMessageId = Math.max(...newMessages.map(message => message.id));
+                    }
+
+                    // Toon de nieuwe berichten
+                    newMessages.forEach(message => {
+                        console.log("Gotify Message:", message.message);
                     });
                 }
             })

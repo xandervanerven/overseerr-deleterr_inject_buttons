@@ -3,6 +3,7 @@ let gotifyInterval;
 function startGotifyPolling() {
     const seenMessageIds = new Set();
     let isFirstRun = true;  // Deze vlag wordt gebruikt om te controleren of dit de eerste keer is dat de functie wordt uitgevoerd.
+    let hasStarted = false; // Deze vlag controleert of we al een "start" bericht hebben gezien.
 
     function fetchGotifyMessages() {
         const proxyEndpoint = "/get_messages";
@@ -17,9 +18,12 @@ function startGotifyPolling() {
             .then(data => {
                 if (data && data.messages && Array.isArray(data.messages) && data.messages.length > 0) {
                     data.messages.reverse().forEach(message => {
-                        // Als dit de eerste run is, markeer dan gewoon de bericht-ID's als 'gezien'.
-                        if (isFirstRun) {
-                            seenMessageIds.add(message.id);
+                        if (isFirstRun && !hasStarted) {
+                            if (message.message.includes("Verzoek om") || message.message.includes("Request to")) {
+                                hasStarted = true; // Markeer dat het startbericht is gezien
+                                console.log("Gotify Message:", message.message); // Toon het startbericht
+                                seenMessageIds.add(message.id);
+                            }
                         } else if (!seenMessageIds.has(message.id)) {
                             console.log("Gotify Message:", message.message);
                             seenMessageIds.add(message.id);

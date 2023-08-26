@@ -40,7 +40,7 @@ function styleAlertifyDialog() {
     }
     if (dialogContent) {
         dialogContent.classList.add('text-gray-200', 'sm:rounded-lg');
-        dialogContent.style.cssText += 'background-color: rgb(55 65 81/var(--tw-bg-opacity)) !important; --tw-border-opacity: 1 !important; border-color: rgb(107 114 128/var(--tw-border-opacity)) !important;';
+        dialogContent.style.cssText += 'background-color: rgb(55 65 81/var(--tw-bg-opacity)) !important; --tw-border-opacity: 1 !important; border: 1px solid rgb(107 114 128/var(--tw-border-opacity)) !important;';
     }
     if (dialogFooter) {
         dialogFooter.style.cssText += 'background-color: rgb(31 41 55/var(--tw-bg-opacity)) !important;';

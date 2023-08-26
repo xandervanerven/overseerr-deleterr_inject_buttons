@@ -1,9 +1,14 @@
 let gotifyInterval;
 
+function stopGotifyPolling() {
+    clearInterval(gotifyInterval);
+}
+
 function startGotifyPolling() {
+    stopGotifyPolling();  // Stop de huidige polling, indien actief
+
     const seenMessageIds = new Set();
-    let isFirstRun = true;  // Deze vlag wordt gebruikt om te controleren of dit de eerste keer is dat de functie wordt uitgevoerd.
-    let hasStarted = false; // Deze vlag controleert of we al een "start" bericht hebben gezien.
+    let isFirstRun = true;
 
     function fetchGotifyMessages() {
         const proxyEndpoint = "/get_messages";
@@ -18,13 +23,15 @@ function startGotifyPolling() {
             .then(data => {
                 if (data && data.messages && Array.isArray(data.messages) && data.messages.length > 0) {
                     data.messages.reverse().forEach(message => {
-                        if (isFirstRun && !hasStarted) {
-                            if (message.message.includes("Verzoek om") || message.message.includes("Request to")) {
-                                hasStarted = true; // Markeer dat het startbericht is gezien
-                                console.log("Gotify Message:", message.message); // Toon het startbericht
-                                seenMessageIds.add(message.id);
-                            }
-                        } else if (!seenMessageIds.has(message.id)) {
+                        const messageText = message.message;
+
+                        // Als dit de eerste run is en het bericht bevat "Verzoek om" of "Request to", markeer dan de bericht-ID's als 'gezien'.
+                        // En begin met het weergeven van de berichten.
+                        if (isFirstRun && (messageText.includes("Verzoek om") || messageText.includes("Request to"))) {
+                            isFirstRun = false;
+                        }
+
+                        if (!isFirstRun && !seenMessageIds.has(message.id)) {
                             console.log("Gotify Message:", message.message);
                             seenMessageIds.add(message.id);
 
@@ -32,11 +39,10 @@ function startGotifyPolling() {
                             if (seenMessageIds.size > 100) {
                                 seenMessageIds.clear();
                             }
+                        } else if (isFirstRun) {
+                            seenMessageIds.add(message.id);
                         }
                     });
-                    if (isFirstRun) {
-                        isFirstRun = false;  // Markeer dat de eerste run is voltooid.
-                    }
                 }
             })
             .catch(error => {
@@ -52,8 +58,4 @@ function startGotifyPolling() {
 
     // Roep de functie om de zoveel seconden aan. Hier is het ingesteld op 1 seconde (1000 milliseconden).
     gotifyInterval = setInterval(fetchGotifyMessages, 1000);
-}
-
-function stopGotifyPolling() {
-    clearInterval(gotifyInterval);
 }
